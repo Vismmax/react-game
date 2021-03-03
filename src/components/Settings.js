@@ -94,11 +94,11 @@ function Settings() {
               control={<Radio />}
               label="6x4 (hard)"
             />
-            <FormControlLabel
+            {/* <FormControlLabel
               value="12x8"
               control={<Radio />}
               label="12x8 (very hard)"
-            />
+            /> */}
           </RadioGroup>
         </FormGroup>
 

@@ -30,7 +30,7 @@ function GameBoard() {
 
   return (
     <div className={classes.root}>
-      <Grid container spacing={12 / widthBoard}>
+      <Grid container spacing={12 / widthBoard - 1}>
         {cards.map((card, id) => (
           <Grid item xs={12 / widthBoard} key={card.id}>
             <FlipCard

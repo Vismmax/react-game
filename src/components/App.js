@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import TopBar from "./TopBar";
 import SideBar from "./SideBar";
 import MainBar from "./MainBar";
 import Sounds from "./Sounds";
+import HotKey from "./HotKey";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -15,24 +16,14 @@ const useStyles = makeStyles((theme) => ({
 
 function App() {
   const classes = useStyles();
-  const [sideBar, setSideBar] = useState(false);
-
-  const toggleSideBar = (open = true) => (event) => {
-    if (
-      event.type === "keydown" &&
-      (event.key === "Tab" || event.key === "Shift")
-    ) {
-      return;
-    }
-    setSideBar(open);
-  };
 
   return (
     <div className={classes.root}>
-      <TopBar toggleSideBar={toggleSideBar} />
-      <SideBar isOpen={sideBar} toggleSideBar={toggleSideBar} />
+      <TopBar />
+      <SideBar />
       <MainBar />
       <Sounds />
+      <HotKey />
     </div>
   );
 }

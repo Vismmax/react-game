@@ -4,6 +4,7 @@ import { resetGame } from "./gameSlice";
 export const settingsSlice = createSlice({
   name: "settings",
   initialState: {
+    isShowSettings: false,
     isShowTime: true,
     isShowCount: true,
     widthBoard: 4,
@@ -12,6 +13,9 @@ export const settingsSlice = createSlice({
     volumeSounds: 1,
   },
   reducers: {
+    setIsShowSettings: (state, action) => {
+      state.isShowSettings = action.payload;
+    },
     toggleShowTime: (state) => {
       state.isShowTime = !state.isShowTime;
     },
@@ -32,6 +36,7 @@ export const settingsSlice = createSlice({
 });
 
 export const {
+  setIsShowSettings,
   toggleShowTime,
   toggleShowCount,
   setSize,
@@ -44,6 +49,7 @@ export const setSizeBoard = (size) => (dispatch) => {
   dispatch(resetGame());
 };
 
+export const isShowSettings = (state) => state.settings.isShowSettings;
 export const isShow = (state) => ({
   isShowTime: state.settings.isShowTime,
   isShowCount: state.settings.isShowCount,

@@ -1,5 +1,5 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -9,7 +9,7 @@ import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
 import Timer from "@material-ui/icons/Timer";
 import ViewCarousel from "@material-ui/icons/ViewCarousel";
-import { isShow } from "../redux/settingsSlice";
+import { setIsShowSettings, isShow } from "../redux/settingsSlice";
 import { flipCount, timeGame } from "../redux/gameSlice";
 
 const useStyles = makeStyles((theme) => ({
@@ -25,7 +25,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function TopBar({ toggleSideBar }) {
+function TopBar() {
+  const dispatch = useDispatch();
   const { isShowTime, isShowCount } = useSelector(isShow);
   const countFlip = useSelector(flipCount);
   const time = useSelector(timeGame);
@@ -40,7 +41,8 @@ function TopBar({ toggleSideBar }) {
           className={classes.menuButton}
           color="inherit"
           aria-label="menu"
-          onClick={toggleSideBar(true)}
+          // onClick={toggleSideBar(true)}
+          onClick={() => dispatch(setIsShowSettings(true))}
         >
           <MenuIcon />
         </IconButton>

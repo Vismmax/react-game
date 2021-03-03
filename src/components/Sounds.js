@@ -71,7 +71,8 @@ function Sounds() {
   return (
     <ReactHowler
       src="http://nashe1.hostingradio.ru/rock-128.mp3"
-      playing={play.isStart}
+      playing={false}
+      html5={true}
     />
   );
 }
