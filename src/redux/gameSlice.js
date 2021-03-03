@@ -6,6 +6,7 @@ export const gameSlice = createSlice({
   initialState: {
     cards: [],
     isStartGame: false,
+    isShowWin: false,
     timerOpenAllId: null,
     flipCount: 0,
     timeGame: 0,
@@ -86,6 +87,9 @@ export const gameSlice = createSlice({
         state.timerAutoGameId = null;
       }
     },
+    setIsShowWin: (state, action) => {
+      state.isShowWin = action.payload;
+    },
   },
 });
 
@@ -107,6 +111,7 @@ export const {
   setTimerAutoGameId,
   clearTimerStartAutoId,
   clearTimerAutoGameId,
+  setIsShowWin,
 } = gameSlice.actions;
 
 export const resetGame = () => (dispatch, getState) => {
@@ -162,6 +167,7 @@ export const stopGame = () => (dispatch) => {
   dispatch(clearTimerGameId());
   dispatch(clearTimerStartAutoId());
   dispatch(clearTimerAutoGameId());
+  dispatch(setIsShowWin(true));
 };
 
 export const autoPlay = () => (dispatch, getState) => {
@@ -172,8 +178,6 @@ export const autoPlay = () => (dispatch, getState) => {
       let randomId = null;
       while (randomId === null || cards[randomId]?.isOpen) {
         randomId = Math.floor(Math.random() * cards.length);
-        console.log("randomId: ", randomId);
-        console.log("cards[randomId]?.isOpen: ", cards[randomId]?.isOpen);
       }
       dispatch(flipCard(randomId));
     }, 2000);
@@ -185,5 +189,6 @@ export const autoPlay = () => (dispatch, getState) => {
 export const cardsGame = (state) => state.game.cards;
 export const flipCount = (state) => state.game.flipCount;
 export const timeGame = (state) => state.game.timeGame;
+export const isShowWin = (state) => state.game.isShowWin;
 
 export default gameSlice.reducer;
