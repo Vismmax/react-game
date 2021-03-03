@@ -21,7 +21,7 @@ function GameBoard() {
   const classes = useStyles();
 
   useEffect(() => {
-    dispatch(resetGame());
+    if (!cards.length) dispatch(resetGame());
   }, []);
 
   const handlerClick = (id) => {

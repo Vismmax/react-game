@@ -7,10 +7,11 @@ import {
   playLike,
   playWin,
 } from "./soundSlice";
+import { getGameData, setGameData } from "../helpers/localStorage";
 
 export const gameSlice = createSlice({
   name: "game",
-  initialState: {
+  initialState: getGameData() || {
     cards: [],
     isStartGame: false,
     isShowWin: false,
@@ -96,6 +97,10 @@ export const gameSlice = createSlice({
     },
     setIsShowWin: (state, action) => {
       state.isShowWin = action.payload;
+      setGameData(state);
+    },
+    saveState: (state) => {
+      setGameData(state);
     },
   },
 });
@@ -119,6 +124,7 @@ export const {
   clearTimerStartAutoId,
   clearTimerAutoGameId,
   setIsShowWin,
+  saveState,
 } = gameSlice.actions;
 
 export const resetGame = () => (dispatch, getState) => {
@@ -130,6 +136,7 @@ export const resetGame = () => (dispatch, getState) => {
   dispatch(clearTimerGameId());
   dispatch(resetState());
   dispatch(resetCards(countCards));
+  dispatch(saveState());
 };
 
 export const flipCard = (id) => (dispatch) => {
@@ -166,12 +173,14 @@ export const compareCard = (id) => (dispatch, getState) => {
         dispatch(playFlipClose(true));
         dispatch(closeCard(game.selectedCardId));
         dispatch(closeCard(id));
+        dispatch(saveState());
       }, 500);
     }
     dispatch(setSelectedCardId(null));
   } else {
     dispatch(setSelectedCardId(id));
   }
+  dispatch(saveState());
 };
 
 export const stopGame = () => (dispatch) => {
@@ -180,6 +189,7 @@ export const stopGame = () => (dispatch) => {
   dispatch(clearTimerAutoGameId());
   dispatch(setIsShowWin(true));
   dispatch(playWin(true));
+  dispatch(saveState());
 };
 
 export const autoPlay = () => (dispatch, getState) => {

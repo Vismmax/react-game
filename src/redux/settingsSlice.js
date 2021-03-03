@@ -1,9 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { resetGame } from "./gameSlice";
+import { getSettings, setSettings } from "../helpers/localStorage";
 
 export const settingsSlice = createSlice({
   name: "settings",
-  initialState: {
+  initialState: getSettings() || {
     isShowSettings: false,
     isShowTime: true,
     isShowCount: true,
@@ -15,6 +16,7 @@ export const settingsSlice = createSlice({
   reducers: {
     setIsShowSettings: (state, action) => {
       state.isShowSettings = action.payload;
+      if (!action.payload) setSettings(state);
     },
     toggleShowTime: (state) => {
       state.isShowTime = !state.isShowTime;
