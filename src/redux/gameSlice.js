@@ -11,6 +11,8 @@ export const gameSlice = createSlice({
     timeGame: 0,
     timerGameId: null,
     selectedCardId: null,
+    timerStartAutoId: null,
+    timerAutoGameId: null,
   },
   reducers: {
     resetState: (state) => {
@@ -66,6 +68,24 @@ export const gameSlice = createSlice({
     setSelectedCardId: (state, action) => {
       state.selectedCardId = action.payload;
     },
+    setTimerStartAutoId: (state, action) => {
+      state.timerStartAutoId = action.payload;
+    },
+    setTimerAutoGameId: (state, action) => {
+      state.timerAutoGameId = action.payload;
+    },
+    clearTimerStartAutoId: (state) => {
+      if (state.timerStartAutoId) {
+        clearTimeout(state.timerStartAutoId);
+        state.timerStartAutoId = null;
+      }
+    },
+    clearTimerAutoGameId: (state) => {
+      if (state.timerAutoGameId) {
+        clearInterval(state.timerAutoGameId);
+        state.timerAutoGameId = null;
+      }
+    },
   },
 });
 
@@ -83,11 +103,17 @@ export const {
   clearTimerGameId,
   incrementFlipCount,
   setSelectedCardId,
+  setTimerStartAutoId,
+  setTimerAutoGameId,
+  clearTimerStartAutoId,
+  clearTimerAutoGameId,
 } = gameSlice.actions;
 
 export const resetGame = () => (dispatch, getState) => {
   const state = getState();
   const countCards = state.settings.widthBoard * state.settings.heightBoard;
+  dispatch(clearTimerStartAutoId());
+  dispatch(clearTimerAutoGameId());
   dispatch(clearTimerIdAll());
   dispatch(clearTimerGameId());
   dispatch(resetState());
@@ -134,9 +160,27 @@ export const compareCard = (id) => (dispatch, getState) => {
 
 export const stopGame = () => (dispatch) => {
   dispatch(clearTimerGameId());
+  dispatch(clearTimerStartAutoId());
+  dispatch(clearTimerAutoGameId());
 };
 
-export const autoPlay = () => (dispatch) => {};
+export const autoPlay = () => (dispatch, getState) => {
+  dispatch(playGame());
+  const timerStartAutoId = setTimeout(() => {
+    const timerAutoGameId = setInterval(() => {
+      const cards = getState().game.cards;
+      let randomId = null;
+      while (randomId === null || cards[randomId]?.isOpen) {
+        randomId = Math.floor(Math.random() * cards.length);
+        console.log("randomId: ", randomId);
+        console.log("cards[randomId]?.isOpen: ", cards[randomId]?.isOpen);
+      }
+      dispatch(flipCard(randomId));
+    }, 2000);
+    dispatch(setTimerAutoGameId(timerAutoGameId));
+  }, 5000);
+  dispatch(setTimerStartAutoId(timerStartAutoId));
+};
 
 export const cardsGame = (state) => state.game.cards;
 export const flipCount = (state) => state.game.flipCount;

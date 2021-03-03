@@ -13,6 +13,7 @@ export default function generateCards(count) {
   const ids = Array.from(idsSet).concat(Array.from(idsSet));
   shuffle(ids);
   const cards = ids.map((idImg) => ({
+    id: Math.random(),
     idImg,
     // src: `https://picsum.photos/id/${idImg}/300/300`,
     src: `https://loremflickr.com/300/300/animal?lock=${idImg}`,

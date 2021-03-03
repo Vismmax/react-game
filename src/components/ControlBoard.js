@@ -5,7 +5,7 @@ import Button from "@material-ui/core/Button";
 import Replay from "@material-ui/icons/Replay";
 import PlayArrow from "@material-ui/icons/PlayArrow";
 import Autorenew from "@material-ui/icons/Autorenew";
-import { resetGame, playGame } from "../redux/gameSlice";
+import { resetGame, playGame, autoPlay } from "../redux/gameSlice";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -24,7 +24,6 @@ function ControlBoard() {
       <Button
         variant="contained"
         color="default"
-        // className={classes.button}
         startIcon={<Replay />}
         onClick={() => dispatch(resetGame())}
       >
@@ -35,7 +34,6 @@ function ControlBoard() {
         variant="contained"
         color="primary"
         size="large"
-        // className={classes.button}
         startIcon={<PlayArrow />}
         onClick={() => dispatch(playGame())}
       >
@@ -45,8 +43,8 @@ function ControlBoard() {
       <Button
         variant="contained"
         color="default"
-        // className={classes.button}
         startIcon={<Autorenew />}
+        onClick={() => dispatch(autoPlay())}
       >
         Auto
       </Button>
