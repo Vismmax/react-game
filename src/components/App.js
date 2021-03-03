@@ -3,6 +3,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import TopBar from "./TopBar";
 import SideBar from "./SideBar";
 import MainBar from "./MainBar";
+import Sounds from "./Sounds";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -31,6 +32,7 @@ function App() {
       <TopBar toggleSideBar={toggleSideBar} />
       <SideBar isOpen={sideBar} toggleSideBar={toggleSideBar} />
       <MainBar />
+      <Sounds />
     </div>
   );
 }

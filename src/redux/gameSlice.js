@@ -1,5 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
 import generateCards from "../helpers/generateCards";
+import {
+  playStart,
+  playFlipOpen,
+  playFlipClose,
+  playLike,
+  playWin,
+} from "./soundSlice";
 
 export const gameSlice = createSlice({
   name: "game",
@@ -126,12 +133,14 @@ export const resetGame = () => (dispatch, getState) => {
 };
 
 export const flipCard = (id) => (dispatch) => {
+  dispatch(playFlipOpen(true));
   dispatch(openCard({ id }));
   dispatch(incrementFlipCount());
   dispatch(compareCard(id));
 };
 
 export const playGame = () => (dispatch) => {
+  dispatch(playStart(true));
   dispatch(resetGame());
   const timerGameId = setInterval(() => dispatch(incrementTimeGame()), 1000);
   dispatch(setTimerGameId(timerGameId));
@@ -148,11 +157,13 @@ export const compareCard = (id) => (dispatch, getState) => {
   if (game.selectedCardId === id) return;
   if (game.selectedCardId !== null) {
     if (game.cards[id].idImg === game.cards[game.selectedCardId].idImg) {
+      dispatch(playLike(true));
       if (!game.cards.filter((card) => !card.isOpen).length) {
         dispatch(stopGame());
       }
     } else {
       setTimeout(() => {
+        dispatch(playFlipClose(true));
         dispatch(closeCard(game.selectedCardId));
         dispatch(closeCard(id));
       }, 500);
@@ -168,6 +179,7 @@ export const stopGame = () => (dispatch) => {
   dispatch(clearTimerStartAutoId());
   dispatch(clearTimerAutoGameId());
   dispatch(setIsShowWin(true));
+  dispatch(playWin(true));
 };
 
 export const autoPlay = () => (dispatch, getState) => {

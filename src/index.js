@@ -9,13 +9,11 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import "fontsource-roboto";
 
 ReactDOM.render(
-  <React.StrictMode>
-    <Provider store={store}>
-      <MuiThemeProvider theme={theme}>
-        <CssBaseline />
-        <App />
-      </MuiThemeProvider>
-    </Provider>
-  </React.StrictMode>,
+  <Provider store={store}>
+    <MuiThemeProvider theme={theme}>
+      <CssBaseline />
+      <App />
+    </MuiThemeProvider>
+  </Provider>,
   document.getElementById("root")
 );
