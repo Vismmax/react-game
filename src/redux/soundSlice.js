@@ -8,6 +8,7 @@ export const soundSlice = createSlice({
     isFlipClose: false,
     isLike: false,
     isWin: false,
+    isMusic: true,
   },
   reducers: {
     playStart: (state, action) => {
@@ -25,6 +26,9 @@ export const soundSlice = createSlice({
     playWin: (state, action) => {
       state.isWin = action.payload;
     },
+    playMusic: (state, action) => {
+      state.isMusic = action.payload;
+    },
   },
 });
 
@@ -34,6 +38,7 @@ export const {
   playFlipClose,
   playLike,
   playWin,
+  playMusic,
 } = soundSlice.actions;
 
 export const isPlay = (state) => ({
@@ -43,5 +48,6 @@ export const isPlay = (state) => ({
   isLike: state.sound.isLike,
   isWin: state.sound.isWin,
 });
+export const isMusic = (state) => state.sound.isMusic;
 
 export default soundSlice.reducer;

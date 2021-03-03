@@ -1,12 +1,7 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import ReactHowler from "react-howler";
 import useSound from "use-sound";
-// import {
-//   setIsShowWin,
-//   isShowWin,
-//   flipCount,
-//   timeGame,
-// } from "../redux/gameSlice";
 import {
   playStart,
   playFlipOpen,
@@ -14,7 +9,9 @@ import {
   playLike,
   playWin,
   isPlay,
+  isMusic,
 } from "../redux/soundSlice";
+import { sounds } from "../redux/settingsSlice";
 import startSfx from "../sounds/start.mp3";
 import flipOpenSfx from "../sounds/flipOpen.mp3";
 import flipCloseSfx from "../sounds/flipClose.mp3";
@@ -24,21 +21,29 @@ import winSfx from "../sounds/win.mp3";
 function Sounds() {
   const dispatch = useDispatch();
   const play = useSelector(isPlay);
+  const isMus = useSelector(isMusic);
+  const { isSounds, volumeSounds } = useSelector(sounds);
 
-  const [start] = useSound(startSfx);
-  const [flipOpen] = useSound(flipOpenSfx);
-  const [flipClose] = useSound(flipCloseSfx);
-  const [like] = useSound(likeSfx);
-  const [win] = useSound(winSfx);
-
-  //   useEffect(() => {
-  //     console.log("sss");
-  //     win();
-  //   }, []);
-
-  //   useEffect(() => {
-  //     win();
-  //   }, [isShow]);
+  const [start] = useSound(startSfx, {
+    volume: volumeSounds,
+    soundEnabled: isSounds,
+  });
+  const [flipOpen] = useSound(flipOpenSfx, {
+    volume: volumeSounds,
+    soundEnabled: isSounds,
+  });
+  const [flipClose] = useSound(flipCloseSfx, {
+    volume: volumeSounds,
+    soundEnabled: isSounds,
+  });
+  const [like] = useSound(likeSfx, {
+    volume: volumeSounds,
+    soundEnabled: isSounds,
+  });
+  const [win] = useSound(winSfx, {
+    volume: volumeSounds,
+    soundEnabled: isSounds,
+  });
 
   useEffect(() => {
     if (play.isStart) {
@@ -63,7 +68,12 @@ function Sounds() {
     }
   }, [play]);
 
-  return null;
+  return (
+    <ReactHowler
+      src="http://nashe1.hostingradio.ru/rock-128.mp3"
+      playing={play.isStart}
+    />
+  );
 }
 
 export default Sounds;

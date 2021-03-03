@@ -8,6 +8,8 @@ export const settingsSlice = createSlice({
     isShowCount: true,
     widthBoard: 4,
     heightBoard: 3,
+    isSounds: true,
+    volumeSounds: 1,
   },
   reducers: {
     toggleShowTime: (state) => {
@@ -20,6 +22,12 @@ export const settingsSlice = createSlice({
       state.widthBoard = action.payload.widthBoard;
       state.heightBoard = action.payload.heightBoard;
     },
+    setIsSounds: (state, action) => {
+      state.isSounds = action.payload;
+    },
+    setVolumeSounds: (state, action) => {
+      state.volumeSounds = action.payload;
+    },
   },
 });
 
@@ -27,6 +35,8 @@ export const {
   toggleShowTime,
   toggleShowCount,
   setSize,
+  setIsSounds,
+  setVolumeSounds,
 } = settingsSlice.actions;
 
 export const setSizeBoard = (size) => (dispatch) => {
@@ -42,5 +52,11 @@ export const sizeBoard = (state) => ({
   widthBoard: state.settings.widthBoard,
   heightBoard: state.settings.heightBoard,
 });
+export const sounds = (state) => ({
+  isSounds: state.settings.isSounds,
+  volumeSounds: state.settings.volumeSounds,
+});
+export const isSounds = (state) => state.settings.isSounds;
+export const volumeSounds = (state) => state.settings.isSounds;
 
 export default settingsSlice.reducer;
